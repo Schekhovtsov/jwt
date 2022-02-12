@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { FC, useContext, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { AuthContext } from '..';
+import { IUser } from '../models/IUser';
+import UserService from '../services/UserService';
 
 /* interface IFormInput {
   email: String;
@@ -11,34 +12,61 @@ import { AuthContext } from '..';
 export const LoginForm: FC = observer(() => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { store } = useContext(AuthContext)
+  const { store } = useContext(AuthContext);
+
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  const handleGetUsers = async () => {
+    try {
+      const response = await UserService.fetchUsers();
+      setUsers(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleLogin = () => {
-    store.login(email, password)
-  }
+    store.login(email, password);
+  };
 
   const handleRegister = () => {
-    store.registration(email, password)
-  }
+    store.registration(email, password);
+  };
 
-  return(
+  const handleLogout = () => {
+    store.logout();
+  };
+
+  return (
     <div>
-      <input type='text'
-             value={email}
-             onChange={(e) => setEmail(e.target.value)}
-             placeholder='E-mail'
-      />
-            <input type='password'
-             value={password}
-             onChange={(e) => setPassword(e.target.value)}
-             placeholder='Password'
-      />
-     <button onClick={handleLogin}>Login</button>
-     <button onClick={handleRegister}>Register</button>
+      {!store.isAuth ? (
+        <div>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="E-mail"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <button onClick={handleLogin}>Login</button>
+          <button onClick={handleRegister}>Register</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleGetUsers}>Get users</button>
+          {users && users.map((user) => <div key={user.id}>{user.email}</div>)}
+        </div>
+      )}
     </div>
-  )
+  );
 
-/*   const { register, handleSubmit } = useForm<IFormInput>();
+  /*   const { register, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     data.password = '1488';
