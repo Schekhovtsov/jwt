@@ -6,14 +6,33 @@ import { IUser } from '../models/IUser';
 import UserService from '../services/UserService';
 
 interface IFormInput {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 
 export const LoginForm: FC = observer(() => {
-/*   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>(''); */
+;
   const { store } = useContext(AuthContext);
+
+  const { register, handleSubmit } = useForm<IFormInput>();
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const handleEmailOnChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const handlePasswordOnChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
+  const handleLogin: SubmitHandler<IFormInput> = () => { 
+    store.login(email, password);
+  };
+
+  const handleRegister = () => {
+    store.registration(email, password);
+  };
+
+  const handleLogout = () => {
+    store.logout();
+  };
 
   const [users, setUsers] = useState<IUser[]>([]);
 
@@ -26,48 +45,17 @@ export const LoginForm: FC = observer(() => {
     }
   };
 
-/*   const handleLogin = () => {
-    store.login(email, password);
-  };
-
-  const handleRegister = () => {
-    store.registration(email, password);
-  }; */
-
-  const handleLogout = () => {
-    store.logout();
-  };
-
-  const { register, handleSubmit } = useForm<IFormInput>();
-
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    store.login(data.email, data.password);
-  };
-
   return (
     <div>
       {!store.isAuth ? (
         <div>
-          {/*  <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="E-mail"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <button onClick={handleLogin}>Login</button>
-          <button onClick={handleRegister}>Register</button> */}
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleLogin)}>
             <label>E-mail</label>
-            <input {...(register('email'))} />
+            <input {...(register('email'))} onChange={(e) => handleEmailOnChange(e)}/>
             <label>Password</label>
-            <input {...register('password')} />
+            <input {...register('password')} onChange={(e) => handlePasswordOnChange(e) } />
             <input type="submit" />
+            <button onClick={handleRegister}>Register</button>
           </form>
         </div>
       ) : (
