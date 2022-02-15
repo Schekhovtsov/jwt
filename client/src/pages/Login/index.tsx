@@ -30,8 +30,6 @@ export const LoginForm: FC = observer(() => {
     store.registration(email, password);
   };
 
-
-
   return (
     <div>
       {!store.isAuth && 

@@ -21,13 +21,11 @@ export const ProfilePage = () => {
     }
   };
 
-  alert('profile page');
-
   return (
     <div>
       <button onClick={handleLogout}>Logout</button>
       <button onClick={handleGetUsers}>Get users</button>
-      {users && users.map((user) => <div key={user.id}>{user.email}</div>)}
+      {users && users.map((user) => <div key={user.email}>{user.email}</div>)}
     </div>
   );
 };

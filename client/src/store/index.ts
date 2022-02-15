@@ -65,7 +65,6 @@ class Store {
         try {
             this.setLoading(true);
             const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
-            console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
