@@ -10,7 +10,7 @@ interface IFormInput {
   password: string;
 }
 
-export const LoginForm: FC = observer(() => {
+export const LoginPage: FC = observer(() => {
 ;
   const { store } = useContext(AuthContext);
 
@@ -32,6 +32,7 @@ export const LoginForm: FC = observer(() => {
 
   return (
     <div>
+      <h1>Login Page</h1>
       {!store.isAuth && 
         <div>
           <form onSubmit={handleSubmit(handleLogin)}>

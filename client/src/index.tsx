@@ -4,16 +4,19 @@ import './index.css';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
+import { BrowserRouter } from 'react-router-dom';
 
 export const AuthContext = createContext({
   store,
-})
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContext.Provider value={{ store }}>
-       <App />
-    </AuthContext.Provider>
+    <BrowserRouter>
+      <AuthContext.Provider value={{ store }}>
+        <App />
+      </AuthContext.Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

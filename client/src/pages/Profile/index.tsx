@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../..";
+import { withAuth } from "../../hoc/withAuth";
 import { IUser } from "../../models/IUser";
 import UserService from "../../services/UserService";
 
-export const ProfilePage = () => {
+const Page = () => {
   const { store } = useContext(AuthContext);
 
   const handleLogout = () => {
@@ -21,11 +22,15 @@ export const ProfilePage = () => {
     }
   };
 
+
   return (
     <div>
+      <h1>Profile page</h1>
       <button onClick={handleLogout}>Logout</button>
       <button onClick={handleGetUsers}>Get users</button>
       {users && users.map((user) => <div key={user.email}>{user.email}</div>)}
     </div>
   );
 };
+
+export const ProfilePage = withAuth(Page);

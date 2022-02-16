@@ -15,8 +15,10 @@
     "mobx": "^6.3.13",
     "mobx-react-lite": "^3.2.3",
     "react": "^17.0.2",
+    "react-compose": "^2.0.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.27.0",
+    "react-router-dom": "6",
     "react-scripts": "5.0.0",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"

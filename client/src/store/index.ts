@@ -61,7 +61,7 @@ class Store {
         }
     }
 
-    async checkAuth() {
+    async refreshAuth() {
         try {
             this.setLoading(true);
             const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
