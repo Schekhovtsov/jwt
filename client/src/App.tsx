@@ -13,10 +13,12 @@ export const App: FC = observer(() => {
 
   const AuthProfile = withAuth(ProfilePage);
 
+  const deleteToken = () => {
+    localStorage.removeItem('token');
+  }
+
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.refreshAuth();
-    }
+    store.refreshAuth();
   }, []);
 
   return (
@@ -38,15 +40,8 @@ export const App: FC = observer(() => {
         { store.isAuth ? 'Status: Auth' : 'Status: NOT auth' }
       </div>
 
-      {/*       {!store.isLoading && (
-        <div>
-          <h1>{store.isAuth ? 'Auth' : 'NOT auth'}</h1>
-          <h2>{store.isAuth && `${store.user.email}`}</h2>
+      <button onClick={deleteToken}>Delete token</button>
 
-          {<LoginForm />}
-          {<AuthProfile />}
-        </div>
-      )} */}
     </div>
   );
 });

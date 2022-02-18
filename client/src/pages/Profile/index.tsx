@@ -9,7 +9,6 @@ const Page = () => {
 
   const handleLogout = () => {
     store.logout();
-    
   };
 
   const [users, setUsers] = useState<IUser[]>([]);
@@ -22,7 +21,6 @@ const Page = () => {
       console.log(e);
     }
   };
-
 
   return (
     <div>

@@ -11,12 +11,6 @@ export const withAuth =
   (props: any) => {
     const { store } = useContext(AuthContext);
 
-    useEffect(() => {
-      if (localStorage.getItem('token')) {
-        console.log('render with token');
-      }
-    }, []);
-
     if (store.isAuth) {
       return <Component {...(props as P)} />;
     } else {
